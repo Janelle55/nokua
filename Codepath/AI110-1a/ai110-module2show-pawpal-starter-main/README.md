@@ -150,13 +150,12 @@ streamlit run app.py      # interactive UI
 1. **Set the owner name** and **add a pet** (name + species) — the pet persists in `st.session_state`.
 2. **Add a task** for that pet: title, time (`HH:MM`), duration, priority, and frequency.
 3. Repeat to **add several tasks** across pets, including two that overlap in time.
-4. In **Today's Schedule**, toggle **Sort by → Time / Priority** to reorder the table live.
+4. **Today's Schedule** shows every task in a table, ordered by time via `Scheduler.sort_by_time()`.
 5. Any overlap surfaces as a yellow **conflict warning** at the top (`st.warning`); a clean
    schedule shows a green success message.
-6. Use **Mark a task complete** to finish a task — a completed daily/weekly task automatically
-   schedules its next occurrence, and the table's ✅/⬜ status updates on rerun.
 
-Key `Scheduler` behaviors shown in the UI: **time/priority sorting**, **conflict warnings**, and
-**recurring-task regeneration** — the same logic verified by the CLI output and test suite above.
+Key `Scheduler` behaviors shown in the UI: **time sorting** and **conflict warnings** — the same
+logic verified by the CLI output and test suite above (which also cover priority sorting,
+filtering, and recurring tasks).
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->

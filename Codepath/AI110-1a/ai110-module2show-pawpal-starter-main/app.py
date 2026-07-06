@@ -82,8 +82,8 @@ all_tasks = owner.get_all_tasks()
 if not all_tasks:
     st.info("No tasks yet. Add one above to see your plan.")
 else:
-    sort_mode = st.radio("Sort by", ["Time", "Priority"], horizontal=True)
-    tasks = scheduler.sort_by_time() if sort_mode == "Time" else scheduler.sort_by_priority()
+    # Show the plan ordered by time, using the Scheduler's sorting method.
+    tasks = scheduler.sort_by_time()
 
     # Conflict warnings — surfaced prominently so the owner notices overlaps.
     warnings = scheduler.conflict_warnings()
@@ -102,24 +102,7 @@ else:
                 "Duration": f"{t.duration} min",
                 "Priority": t.priority.name.title(),
                 "Frequency": t.frequency,
-                "Done": "✅" if t.completed else "⬜",
             }
             for t in tasks
         ]
     )
-
-    # Mark a task complete (recurring tasks auto-generate their next occurrence).
-    st.markdown("**Mark a task complete**")
-    pending = scheduler.filter_tasks(completed=False)
-    if pending:
-        labels = {f"{t.time} — {t.description} ({t.pet.name})": t for t in pending}
-        choice = st.selectbox("Choose a task", list(labels.keys()))
-        if st.button("Complete task"):
-            next_task = labels[choice].mark_complete()
-            if next_task:
-                st.success(f"Done! Next occurrence scheduled for {next_task.due_date}.")
-            else:
-                st.success("Marked complete.")
-            st.rerun()
-    else:
-        st.caption("All tasks complete. 🐾")
